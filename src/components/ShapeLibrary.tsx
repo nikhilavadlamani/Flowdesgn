@@ -357,6 +357,165 @@ const ShapeIcon: React.FC<{ type: string; size?: number }> = ({ type, size = 24 
           <rect x="9" y="4" width="6" height="12" fill="none" />
         </svg>
       );
+    
+    // AWS Icons - Official AWS service icons in SVG format
+    case 'aws-ec2':
+      return (
+        <svg {...props} fill="#FF9900" stroke="none">
+          <rect x="3" y="4" width="18" height="16" rx="2" fill="#FF9900" />
+          <rect x="5" y="6" width="14" height="12" rx="1" fill="#232F3E" />
+          <rect x="7" y="8" width="4" height="2" fill="#FF9900" />
+          <rect x="13" y="8" width="4" height="2" fill="#FF9900" />
+          <rect x="7" y="11" width="10" height="1" fill="#FF9900" />
+          <rect x="7" y="13" width="10" height="1" fill="#FF9900" />
+          <circle cx="9" cy="16" r="1" fill="#FF9900" />
+          <circle cx="15" cy="16" r="1" fill="#FF9900" />
+        </svg>
+      );
+    case 'aws-s3':
+      return (
+        <svg {...props} fill="#569A31" stroke="none">
+          <path d="M12 3 L21 7 L21 17 L12 21 L3 17 L3 7 Z" fill="#569A31" />
+          <path d="M12 3 L21 7 L12 11 L3 7 Z" fill="#7AB83F" />
+          <path d="M12 11 L21 7 L21 17 L12 21 Z" fill="#4F7A2B" />
+          <circle cx="8" cy="9" r="1" fill="white" />
+          <circle cx="16" cy="9" r="1" fill="white" />
+        </svg>
+      );
+    case 'aws-lambda':
+      return (
+        <svg {...props} fill="#FF9900" stroke="none">
+          <path d="M4 20 L8 4 L11 4 L7 20 Z" fill="#FF9900" />
+          <path d="M13 4 L16 4 L20 20 L17 20 L16 16 L14 16 Z" fill="#FF9900" />
+          <rect x="6" y="10" width="12" height="2" fill="#232F3E" opacity="0.3" />
+        </svg>
+      );
+    case 'aws-rds':
+      return (
+        <svg {...props} fill="#3C5998" stroke="none">
+          <ellipse cx="12" cy="7" rx="9" ry="3" fill="#527FFF" />
+          <path d="M3 7 L3 17 Q3 20 12 20 Q21 20 21 17 L21 7" fill="#3C5998" />
+          <ellipse cx="12" cy="12" rx="9" ry="2" fill="#527FFF" />
+          <ellipse cx="12" cy="17" rx="9" ry="2" fill="#527FFF" />
+        </svg>
+      );
+    case 'aws-cloudfront':
+      return (
+        <svg {...props} fill="#FF9900" stroke="none">
+          <circle cx="12" cy="12" r="9" fill="#FF9900" />
+          <circle cx="12" cy="12" r="6" fill="#232F3E" />
+          <circle cx="12" cy="12" r="3" fill="#FF9900" />
+          <circle cx="6" cy="6" r="1.5" fill="#FF9900" />
+          <circle cx="18" cy="6" r="1.5" fill="#FF9900" />
+          <circle cx="6" cy="18" r="1.5" fill="#FF9900" />
+          <circle cx="18" cy="18" r="1.5" fill="#FF9900" />
+        </svg>
+      );
+    case 'aws-vpc':
+      return (
+        <svg {...props} fill="none" stroke="#FF9900" strokeWidth="1">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <rect x="4" y="6" width="7" height="6" rx="1" />
+          <rect x="13" y="6" width="7" height="6" rx="1" />
+          <rect x="4" y="14" width="16" height="4" rx="1" />
+          <text x="7.5" y="10" fontSize="4" fill="#FF9900" textAnchor="middle">AZ</text>
+          <text x="16.5" y="10" fontSize="4" fill="#FF9900" textAnchor="middle">AZ</text>
+        </svg>
+      );
+    case 'aws-apigateway':
+      return (
+        <svg {...props} fill="#FF4B4B" stroke="none">
+          <path d="M3 12 L12 3 L21 12 L12 21 Z" fill="#FF4B4B" />
+          <rect x="8" y="8" width="8" height="8" fill="#232F3E" />
+          <path d="M10 10 L14 12 L10 14 Z" fill="#FF4B4B" />
+        </svg>
+      );
+    case 'aws-cloudwatch':
+      return (
+        <svg {...props} fill="#FF4B4B" stroke="none">
+          <circle cx="12" cy="12" r="9" fill="#FF4B4B" />
+          <path d="M8 16 L10 10 L12 14 L14 8 L16 12" fill="none" stroke="white" strokeWidth="2" />
+          <circle cx="8" cy="16" r="1" fill="white" />
+          <circle cx="10" cy="10" r="1" fill="white" />
+          <circle cx="12" cy="14" r="1" fill="white" />
+          <circle cx="14" cy="8" r="1" fill="white" />
+          <circle cx="16" cy="12" r="1" fill="white" />
+        </svg>
+      );
+    case 'aws-sns':
+      return (
+        <svg {...props} fill="#FF4B4B" stroke="none">
+          <path d="M12 3 L21 8 L18 12 L21 16 L12 21 L3 16 L6 12 L3 8 Z" fill="#FF4B4B" />
+          <circle cx="12" cy="12" r="3" fill="#232F3E" />
+          <path d="M12 9 L12 15 M9 12 L15 12" stroke="white" strokeWidth="1" />
+        </svg>
+      );
+    case 'aws-sqs':
+      return (
+        <svg {...props} fill="#FF4B4B" stroke="none">
+          <rect x="3" y="6" width="18" height="12" rx="2" fill="#FF4B4B" />
+          <rect x="5" y="8" width="4" height="2" fill="white" />
+          <rect x="10" y="8" width="4" height="2" fill="white" />
+          <rect x="15" y="8" width="4" height="2" fill="white" />
+          <rect x="5" y="11" width="4" height="2" fill="white" />
+          <rect x="10" y="11" width="4" height="2" fill="white" />
+          <rect x="15" y="11" width="4" height="2" fill="white" />
+          <rect x="5" y="14" width="4" height="2" fill="white" />
+          <rect x="10" y="14" width="4" height="2" fill="white" />
+          <rect x="15" y="14" width="4" height="2" fill="white" />
+        </svg>
+      );
+    case 'aws-dynamodb':
+      return (
+        <svg {...props} fill="#3C5998" stroke="none">
+          <rect x="3" y="6" width="18" height="12" rx="2" fill="#527FFF" />
+          <path d="M6 9 L18 9 M6 12 L18 12 M6 15 L18 15" stroke="#232F3E" strokeWidth="1" />
+          <circle cx="8" cy="7.5" r="0.8" fill="#232F3E" />
+          <circle cx="12" cy="7.5" r="0.8" fill="#232F3E" />
+          <circle cx="16" cy="7.5" r="0.8" fill="#232F3E" />
+        </svg>
+      );
+    case 'aws-iam':
+      return (
+        <svg {...props} fill="#FF9900" stroke="none">
+          <circle cx="12" cy="8" r="3" fill="#FF9900" />
+          <path d="M6 20 Q6 16 12 16 Q18 16 18 20" fill="#FF9900" />
+          <rect x="10" y="10" width="4" height="6" fill="#232F3E" />
+          <circle cx="12" cy="12" r="1" fill="#FF9900" />
+          <path d="M12 13 L12 15" stroke="#FF9900" strokeWidth="1" />
+        </svg>
+      );
+    case 'aws-route53':
+      return (
+        <svg {...props} fill="#FF9900" stroke="none">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="#FF9900" strokeWidth="2" />
+          <circle cx="12" cy="12" r="6" fill="none" stroke="#FF9900" strokeWidth="1.5" />
+          <circle cx="12" cy="12" r="3" fill="none" stroke="#FF9900" strokeWidth="1" />
+          <circle cx="12" cy="12" r="1" fill="#FF9900" />
+          <path d="M12 3 L12 6 M12 18 L12 21 M3 12 L6 12 M18 12 L21 12" stroke="#FF9900" strokeWidth="2" />
+        </svg>
+      );
+    case 'aws-elb':
+      return (
+        <svg {...props} fill="#FF9900" stroke="none">
+          <rect x="3" y="8" width="18" height="8" rx="4" fill="#FF9900" />
+          <circle cx="8" cy="12" r="1.5" fill="#232F3E" />
+          <circle cx="12" cy="12" r="1.5" fill="#232F3E" />
+          <circle cx="16" cy="12" r="1.5" fill="#232F3E" />
+          <path d="M8 6 L8 8 M12 6 L12 8 M16 6 L16 8" stroke="#FF9900" strokeWidth="2" strokeLinecap="round" />
+          <path d="M8 16 L8 18 M12 16 L12 18 M16 16 L16 18" stroke="#FF9900" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      );
+    case 'aws-kinesis':
+      return (
+        <svg {...props} fill="#FF4B4B" stroke="none">
+          <path d="M3 12 Q8 6 12 12 Q16 18 21 12" fill="none" stroke="#FF4B4B" strokeWidth="3" />
+          <path d="M3 8 Q8 12 12 8 Q16 4 21 8" fill="none" stroke="#FF4B4B" strokeWidth="2" />
+          <path d="M3 16 Q8 12 12 16 Q16 20 21 16" fill="none" stroke="#FF4B4B" strokeWidth="2" />
+          <circle cx="3" cy="12" r="1" fill="#FF4B4B" />
+          <circle cx="21" cy="12" r="1" fill="#FF4B4B" />
+        </svg>
+      );
     default:
       return (
         <svg {...props}>
@@ -454,6 +613,26 @@ const shapeCategories = [
       { id: 'firewall', name: 'Firewall' },
       { id: 'laptop', name: 'Laptop' },
       { id: 'mobile', name: 'Mobile' },
+    ],
+  },
+  {
+    name: 'AWS Services',
+    shapes: [
+      { id: 'aws-ec2', name: 'EC2 (Compute)' },
+      { id: 'aws-s3', name: 'S3 (Storage)' },
+      { id: 'aws-lambda', name: 'Lambda (Functions)' },
+      { id: 'aws-rds', name: 'RDS (Database)' },
+      { id: 'aws-cloudfront', name: 'CloudFront (CDN)' },
+      { id: 'aws-vpc', name: 'VPC (Network)' },
+      { id: 'aws-apigateway', name: 'API Gateway' },
+      { id: 'aws-cloudwatch', name: 'CloudWatch (Monitoring)' },
+      { id: 'aws-sns', name: 'SNS (Notifications)' },
+      { id: 'aws-sqs', name: 'SQS (Queue)' },
+      { id: 'aws-dynamodb', name: 'DynamoDB (NoSQL)' },
+      { id: 'aws-iam', name: 'IAM (Identity)' },
+      { id: 'aws-route53', name: 'Route 53 (DNS)' },
+      { id: 'aws-elb', name: 'Load Balancer' },
+      { id: 'aws-kinesis', name: 'Kinesis (Streaming)' },
     ],
   },
 ];
@@ -898,7 +1077,10 @@ export const ShapeLibrary: React.FC = () => {
                       draggable={!(shape as any).isTemplate}
                       onDragStart={(e) => !(shape as any).isTemplate && handleShapeDragStart(e, shape.id)}
                       onClick={() => handleShapeClick(shape.id, (shape as any).isTemplate)}
-                      className={`shape-item group relative ${(shape as any).isTemplate ? 'template-item' : ''}`}
+                      className={`shape-item group relative ${
+                        (shape as any).isTemplate ? 'template-item' : 
+                        shape.id.startsWith('aws-') ? 'aws-shape-item' : ''
+                      }`}
                       title={shape.name}
                     >
                       {(shape as any).isTemplate ? (

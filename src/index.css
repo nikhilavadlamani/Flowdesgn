@@ -67,4 +67,16 @@
   .template-item:active {
     @apply bg-purple-200 transform scale-105;
   }
+  
+  .aws-shape-item {
+    @apply bg-orange-50 border border-orange-200 cursor-pointer;
+  }
+  
+  .aws-shape-item:hover {
+    @apply bg-orange-100 border-orange-300 transform scale-110 shadow-md;
+  }
+  
+  .aws-shape-item:active {
+    @apply bg-orange-200 transform scale-105;
+  }
 }
