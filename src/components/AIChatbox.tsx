@@ -31,26 +31,205 @@ export const AIChatbox: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const createShapeFromAI = (shapeType: string, x: number = 200, y: number = 200) => {
-    const newElement = {
-      type: 'shape' as const,
-      x,
-      y,
-      width: 120,
-      height: 80,
-      rotation: 0,
-      properties: {
-        shapeType,
-        text: '',
+  const createFlowchartTemplate = () => {
+    const shapes = [
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 100,
+        width: 140,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'terminator', text: 'Start' },
+        style: { fill: '#4caf50', stroke: '#388e3c', strokeWidth: 2, opacity: 1 }
       },
-      style: {
-        fill: '#e3f2fd',
-        stroke: '#1976d2',
-        strokeWidth: 2,
-        opacity: 1,
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 200,
+        width: 140,
+        height: 80,
+        rotation: 0,
+        properties: { shapeType: 'process', text: 'Process Data' },
+        style: { fill: '#2196f3', stroke: '#1976d2', strokeWidth: 2, opacity: 1 }
       },
-    };
-    addElement(newElement);
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 320,
+        width: 140,
+        height: 80,
+        rotation: 0,
+        properties: { shapeType: 'decision', text: 'Is Valid?' },
+        style: { fill: '#ff9800', stroke: '#f57c00', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 500,
+        y: 320,
+        width: 140,
+        height: 80,
+        rotation: 0,
+        properties: { shapeType: 'process', text: 'Show Error' },
+        style: { fill: '#f44336', stroke: '#d32f2f', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 440,
+        width: 140,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'terminator', text: 'End' },
+        style: { fill: '#4caf50', stroke: '#388e3c', strokeWidth: 2, opacity: 1 }
+      }
+    ];
+
+    shapes.forEach(shape => addElement(shape));
+  };
+
+  const createOrgChartTemplate = () => {
+    const shapes = [
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 100,
+        width: 120,
+        height: 80,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'CEO' },
+        style: { fill: '#9c27b0', stroke: '#6a1b9a', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 150,
+        y: 220,
+        width: 120,
+        height: 70,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'VP Sales' },
+        style: { fill: '#3f51b5', stroke: '#283593', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 450,
+        y: 220,
+        width: 120,
+        height: 70,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'VP Tech' },
+        style: { fill: '#3f51b5', stroke: '#283593', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 100,
+        y: 340,
+        width: 100,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'Sales Rep' },
+        style: { fill: '#009688', stroke: '#00695c', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 220,
+        y: 340,
+        width: 100,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'Sales Rep' },
+        style: { fill: '#009688', stroke: '#00695c', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 400,
+        y: 340,
+        width: 100,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'Developer' },
+        style: { fill: '#009688', stroke: '#00695c', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 520,
+        y: 340,
+        width: 100,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'Designer' },
+        style: { fill: '#009688', stroke: '#00695c', strokeWidth: 2, opacity: 1 }
+      }
+    ];
+
+    shapes.forEach(shape => addElement(shape));
+  };
+
+  const createNetworkDiagram = () => {
+    const shapes = [
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 100,
+        width: 100,
+        height: 80,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'Internet' },
+        style: { fill: '#ff9800', stroke: '#f57c00', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 220,
+        width: 100,
+        height: 80,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'Router' },
+        style: { fill: '#2196f3', stroke: '#1976d2', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 340,
+        width: 100,
+        height: 80,
+        rotation: 0,
+        properties: { shapeType: 'rectangle', text: 'Switch' },
+        style: { fill: '#4caf50', stroke: '#388e3c', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 150,
+        y: 460,
+        width: 80,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'circle', text: 'PC 1' },
+        style: { fill: '#9c27b0', stroke: '#6a1b9a', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 300,
+        y: 460,
+        width: 80,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'circle', text: 'PC 2' },
+        style: { fill: '#9c27b0', stroke: '#6a1b9a', strokeWidth: 2, opacity: 1 }
+      },
+      {
+        type: 'shape' as const,
+        x: 450,
+        y: 460,
+        width: 80,
+        height: 60,
+        rotation: 0,
+        properties: { shapeType: 'circle', text: 'Server' },
+        style: { fill: '#f44336', stroke: '#d32f2f', strokeWidth: 2, opacity: 1 }
+      }
+    ];
+
+    shapes.forEach(shape => addElement(shape));
   };
 
   const handleSendMessage = async () => {
@@ -100,83 +279,31 @@ export const AIChatbox: React.FC = () => {
     if (lowerInput.includes('create') || lowerInput.includes('add') || lowerInput.includes('make') || lowerInput.includes('generate')) {
       
       // Template creation
-      if (lowerInput.includes('basic flowchart') || lowerInput.includes('flowchart template')) {
-        // Trigger template creation through the shape library
-        setTimeout(() => {
-          const event = new CustomEvent('createTemplate', { detail: { templateId: 'basic-flowchart' } });
-          window.dispatchEvent(event);
-        }, 100);
-        return '✅ I\'ve created a basic flowchart template with Start, Process, Decision, and End elements! The shapes are optimally positioned and color-coded for easy understanding.';
+      if (lowerInput.includes('basic flowchart') || lowerInput.includes('flowchart template') || lowerInput.includes('flowchart')) {
+        createFlowchartTemplate();
+        return '✅ I\'ve created a professional flowchart template with Start, Process, Decision, and End elements! The shapes are optimally positioned and color-coded for clear process flow visualization.';
       }
       
-      if (lowerInput.includes('org chart') || lowerInput.includes('organization chart')) {
-        setTimeout(() => {
-          const event = new CustomEvent('createTemplate', { detail: { templateId: 'org-chart' } });
-          window.dispatchEvent(event);
-        }, 100);
-        return '🏢 I\'ve generated an organizational chart template with CEO, managers, and employees! Perfect starting point for your company structure.';
+      if (lowerInput.includes('org chart') || lowerInput.includes('organization chart') || lowerInput.includes('organizational')) {
+        createOrgChartTemplate();
+        return '🏢 I\'ve generated a comprehensive organizational chart with CEO, department heads, and team members! Perfect for visualizing company structure and reporting relationships.';
       }
       
-      if (lowerInput.includes('network diagram') || lowerInput.includes('network')) {
-        setTimeout(() => {
-          const event = new CustomEvent('createTemplate', { detail: { templateId: 'network-diagram' } });
-          window.dispatchEvent(event);
-        }, 100);
-        return '🌐 Created a network diagram template with server, router, switch, and connected devices! Great for IT infrastructure planning.';
-      }
-      
-      // Individual shape creation with smart positioning
-      if (lowerInput.includes('flowchart') || lowerInput.includes('flow chart')) {
-        const startY = 100;
-        const spacing = 120;
-        createShapeFromAI('terminator', 300, startY);
-        createShapeFromAI('process', 300, startY + spacing);
-        createShapeFromAI('decision', 300, startY + spacing * 2);
-        createShapeFromAI('terminator', 300, startY + spacing * 3);
-        return '✅ I\'ve created an optimized flowchart layout with properly spaced elements! The workflow follows industry-standard design patterns for maximum clarity.';
-      }
-      
-      if (lowerInput.includes('rectangle') || lowerInput.includes('box')) {
-        createShapeFromAI('rectangle');
-        return '✅ Added a rectangle to your canvas! Pro tip: Double-click to add text, or drag the corners to resize.';
-      }
-      
-      if (lowerInput.includes('circle')) {
-        createShapeFromAI('circle');
-        return '✅ Added a circle to your canvas! Pro tip: Perfect for representing states, entities, or endpoints in your diagrams.';
-      }
-      
-      if (lowerInput.includes('diamond') || lowerInput.includes('decision')) {
-        createShapeFromAI('diamond');
-        return '✅ Added a diamond shape! Perfect for decision points in flowcharts and process diagrams.';
+      if (lowerInput.includes('network diagram') || lowerInput.includes('network') || lowerInput.includes('infrastructure')) {
+        createNetworkDiagram();
+        return '🌐 Created a network infrastructure diagram with Internet, Router, Switch, and connected devices! Ideal for IT planning and documentation.';
       }
       
       // Advanced AI: Generate diagrams from workflow descriptions
       if (lowerInput.includes('workflow') || lowerInput.includes('process') || lowerInput.includes('steps')) {
-        const y = 150;
-        const spacing = 100;
-        createShapeFromAI('terminator', 200, y);
-        createShapeFromAI('process', 200, y + spacing);
-        createShapeFromAI('process', 200, y + spacing * 2);
-        createShapeFromAI('decision', 200, y + spacing * 3);
-        createShapeFromAI('terminator', 200, y + spacing * 4);
+        createFlowchartTemplate();
         return '🔄 I\'ve analyzed your request and created an optimized workflow diagram! Each step is perfectly positioned with professional spacing and flow logic.';
       }
       
       // AI understands business scenarios
-      if (lowerInput.includes('business') || lowerInput.includes('company') || lowerInput.includes('organization')) {
-        setTimeout(() => {
-          const event = new CustomEvent('createTemplate', { detail: { templateId: 'org-chart' } });
-          window.dispatchEvent(event);
-        }, 100);
+      if (lowerInput.includes('business') || lowerInput.includes('company')) {
+        createOrgChartTemplate();
         return '🏢 I\'ve created a professional organizational structure! This template follows industry best practices for business hierarchy visualization.';
-      }
-      
-      if (lowerInput.includes('network') || lowerInput.includes('topology')) {
-        createShapeFromAI('server', 100, 150);
-        createShapeFromAI('router', 250, 150);
-        createShapeFromAI('cloud', 400, 150);
-        return '✅ Created a basic network topology with Server, Router, and Cloud shapes! Connect them to show your network flow.';
       }
     }
     

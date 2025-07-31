@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Stage, Layer, Rect, Circle, Text, Group, Line, Ellipse } from 'react-konva';
+import { Stage, Layer, Rect, Circle, Text, Group, Line, Ellipse, Path } from 'react-konva';
 import { useEditorStore } from '../store/editorStore';
 import { SelectionHandles } from './SelectionHandles';
 import { Connector } from './Connector';
@@ -1185,6 +1185,363 @@ export const Canvas: React.FC = () => {
                 fill="#333"
               />
             )}
+          </Group>
+        );
+
+      // AWS Icons - Render as vector graphics in Konva
+      case 'aws-ec2':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Rect
+              width={element.width}
+              height={element.height}
+              fill="linear-gradient(45deg, #F58536 0%, #FF9900 100%)"
+              stroke={isSelected ? '#2196f3' : '#FF9900'}
+              strokeWidth={isSelected ? 3 : 2}
+              opacity={element.style.opacity}
+              cornerRadius={4}
+            />
+            <Rect
+              x={element.width * 0.1}
+              y={element.height * 0.1}
+              width={element.width * 0.8}
+              height={element.height * 0.8}
+              fill="#232F3E"
+              cornerRadius={2}
+            />
+            <Rect
+              x={element.width * 0.2}
+              y={element.height * 0.2}
+              width={element.width * 0.6}
+              height={element.height * 0.6}
+              fill="#FF9900"
+              cornerRadius={1}
+            />
+            <Rect
+              x={element.width * 0.25}
+              y={element.height * 0.25}
+              width={element.width * 0.5}
+              height={element.height * 0.5}
+              fill="#232F3E"
+              cornerRadius={1}
+            />
+            {/* Server lines */}
+            <Rect x={element.width * 0.3} y={element.height * 0.35} width={element.width * 0.4} height={element.height * 0.08} fill="#FF9900"/>
+            <Rect x={element.width * 0.3} y={element.height * 0.45} width={element.width * 0.4} height={element.height * 0.08} fill="#FF9900"/>
+            <Rect x={element.width * 0.3} y={element.height * 0.55} width={element.width * 0.4} height={element.height * 0.08} fill="#FF9900"/>
+          </Group>
+        );
+
+      case 'aws-s3':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Line
+              points={[
+                element.width * 0.5, element.height * 0.1,
+                element.width * 0.9, element.height * 0.3,
+                element.width * 0.9, element.height * 0.9,
+                element.width * 0.5, element.height * 1.1,
+                element.width * 0.1, element.height * 0.9,
+                element.width * 0.1, element.height * 0.3
+              ]}
+              closed
+              fill="#569A31"
+              stroke={isSelected ? '#2196f3' : '#569A31'}
+              strokeWidth={isSelected ? 3 : 1}
+              opacity={element.style.opacity}
+            />
+            <Line
+              points={[
+                element.width * 0.5, element.height * 0.1,
+                element.width * 0.9, element.height * 0.3,
+                element.width * 0.5, element.height * 0.5,
+                element.width * 0.1, element.height * 0.3
+              ]}
+              closed
+              fill="#7AA116"
+            />
+            <Circle x={element.width * 0.35} y={element.height * 0.4} radius={element.width * 0.04} fill="white" opacity={0.9}/>
+            <Circle x={element.width * 0.65} y={element.height * 0.4} radius={element.width * 0.04} fill="white" opacity={0.9}/>
+          </Group>
+        );
+
+      case 'aws-lambda':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Rect
+              width={element.width}
+              height={element.height}
+              fill="#FF9900"
+              stroke={isSelected ? '#2196f3' : '#FF9900'}
+              strokeWidth={isSelected ? 3 : 2}
+              opacity={element.style.opacity}
+              cornerRadius={4}
+            />
+            <Line
+              points={[
+                element.width * 0.2, element.height * 0.9,
+                element.width * 0.35, element.height * 0.2,
+                element.width * 0.5, element.height * 0.2,
+                element.width * 0.35, element.height * 0.9
+              ]}
+              closed
+              fill="#232F3E"
+            />
+            <Line
+              points={[
+                element.width * 0.55, element.height * 0.2,
+                element.width * 0.7, element.height * 0.2,
+                element.width * 0.8, element.height * 0.9,
+                element.width * 0.65, element.height * 0.9,
+                element.width * 0.7, element.height * 0.7,
+                element.width * 0.6, element.height * 0.7
+              ]}
+              closed
+              fill="#232F3E"
+            />
+          </Group>
+        );
+
+      case 'aws-rds':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Rect
+              width={element.width}
+              height={element.height}
+              fill="#527FFF"
+              stroke={isSelected ? '#2196f3' : '#527FFF'}
+              strokeWidth={isSelected ? 3 : 2}
+              opacity={element.style.opacity}
+              cornerRadius={4}
+            />
+            <Ellipse
+              x={element.width * 0.5}
+              y={element.height * 0.25}
+              radiusX={element.width * 0.35}
+              radiusY={element.height * 0.12}
+              fill="#7BB3F0"
+            />
+            <Rect
+              x={element.width * 0.15}
+              y={element.height * 0.25}
+              width={element.width * 0.7}
+              height={element.height * 0.5}
+              fill="#3C5998"
+            />
+            <Ellipse
+              x={element.width * 0.5}
+              y={element.height * 0.75}
+              radiusX={element.width * 0.35}
+              radiusY={element.height * 0.12}
+              fill="#527FFF"
+            />
+            <Ellipse
+              x={element.width * 0.5}
+              y={element.width * 0.45}
+              radiusX={element.width * 0.35}
+              radiusY={element.height * 0.08}
+              fill="#7BB3F0"
+            />
+            <Ellipse
+              x={element.width * 0.5}
+              y={element.height * 0.6}
+              radiusX={element.width * 0.35}
+              radiusY={element.height * 0.08}
+              fill="#7BB3F0"
+            />
+          </Group>
+        );
+
+      case 'aws-cloudfront':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Rect
+              width={element.width}
+              height={element.height}
+              fill="#FF9900"
+              stroke={isSelected ? '#2196f3' : '#FF9900'}
+              strokeWidth={isSelected ? 3 : 2}
+              opacity={element.style.opacity}
+              cornerRadius={4}
+            />
+            <Circle
+              x={element.width * 0.5}
+              y={element.height * 0.5}
+              radius={element.width * 0.35}
+              fill="none"
+              stroke="#232F3E"
+              strokeWidth={2}
+            />
+            <Circle
+              x={element.width * 0.5}
+              y={element.height * 0.5}
+              radius={element.width * 0.25}
+              fill="none"
+              stroke="#232F3E"
+              strokeWidth={1.5}
+            />
+            <Circle
+              x={element.width * 0.5}
+              y={element.height * 0.5}
+              radius={element.width * 0.15}
+              fill="none"
+              stroke="#232F3E"
+              strokeWidth={1}
+            />
+            <Circle x={element.width * 0.5} y={element.height * 0.5} radius={element.width * 0.04} fill="#232F3E"/>
+            {/* Global nodes */}
+            <Circle x={element.width * 0.25} y={element.height * 0.25} radius={element.width * 0.04} fill="#232F3E"/>
+            <Circle x={element.width * 0.75} y={element.height * 0.25} radius={element.width * 0.04} fill="#232F3E"/>
+            <Circle x={element.width * 0.25} y={element.height * 0.75} radius={element.width * 0.04} fill="#232F3E"/>
+            <Circle x={element.width * 0.75} y={element.height * 0.75} radius={element.width * 0.04} fill="#232F3E"/>
+          </Group>
+        );
+
+      case 'aws-vpc':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Rect
+              width={element.width}
+              height={element.height}
+              fill="#FF9900"
+              stroke={isSelected ? '#2196f3' : '#FF9900'}
+              strokeWidth={isSelected ? 3 : 2}
+              opacity={element.style.opacity}
+              cornerRadius={4}
+            />
+            <Rect
+              x={element.width * 0.08}
+              y={element.height * 0.18}
+              width={element.width * 0.84}
+              height={element.height * 0.64}
+              fill="none"
+              stroke="#232F3E"
+              strokeWidth={2}
+              cornerRadius={2}
+            />
+            <Rect
+              x={element.width * 0.15}
+              y={element.height * 0.25}
+              width={element.width * 0.3}
+              height={element.height * 0.25}
+              fill="none"
+              stroke="#232F3E"
+              strokeWidth={1.5}
+              cornerRadius={1}
+            />
+            <Rect
+              x={element.width * 0.55}
+              y={element.height * 0.25}
+              width={element.width * 0.3}
+              height={element.height * 0.25}
+              fill="none"
+              stroke="#232F3E"
+              strokeWidth={1.5}
+              cornerRadius={1}
+            />
+            <Rect
+              x={element.width * 0.15}
+              y={element.height * 0.57}
+              width={element.width * 0.7}
+              height={element.height * 0.18}
+              fill="none"
+              stroke="#232F3E"
+              strokeWidth={1.5}
+              cornerRadius={1}
+            />
+            <Text
+              text="VPC"
+              x={element.width * 0.42}
+              y={element.height * 0.87}
+              fontSize={element.width * 0.1}
+              fill="#232F3E"
+              align="center"
+            />
+          </Group>
+        );
+
+      case 'aws-apigateway':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Rect
+              width={element.width}
+              height={element.height}
+              fill="#FF4B4B"
+              stroke={isSelected ? '#2196f3' : '#FF4B4B'}
+              strokeWidth={isSelected ? 3 : 2}
+              opacity={element.style.opacity}
+              cornerRadius={4}
+            />
+            <Line
+              points={[
+                element.width * 0.15, element.height * 0.5,
+                element.width * 0.5, element.width * 0.15,
+                element.width * 0.85, element.height * 0.5,
+                element.width * 0.5, element.height * 0.85
+              ]}
+              closed
+              fill="#232F3E"
+            />
+            <Line
+              points={[
+                element.width * 0.25, element.height * 0.5,
+                element.width * 0.5, element.height * 0.25,
+                element.width * 0.75, element.height * 0.5,
+                element.width * 0.5, element.height * 0.75
+              ]}
+              closed
+              fill="#FF4B4B"
+            />
+            <Rect
+              x={element.width * 0.35}
+              y={element.height * 0.35}
+              width={element.width * 0.3}
+              height={element.height * 0.3}
+              fill="#232F3E"
+              cornerRadius={2}
+            />
+            <Line
+              points={[
+                element.width * 0.42, element.height * 0.42,
+                element.width * 0.58, element.height * 0.5,
+                element.width * 0.42, element.height * 0.58
+              ]}
+              closed
+              fill="#FF4B4B"
+            />
+            <Circle x={element.width * 0.25} y={element.height * 0.5} radius={element.width * 0.04} fill="white"/>
+            <Circle x={element.width * 0.75} y={element.height * 0.5} radius={element.width * 0.04} fill="white"/>
+          </Group>
+        );
+
+      case 'aws-dynamodb':
+        return (
+          <Group key={element.id} {...commonProps}>
+            <Rect
+              width={element.width}
+              height={element.height}
+              fill="#527FFF"
+              stroke={isSelected ? '#2196f3' : '#527FFF'}
+              strokeWidth={isSelected ? 3 : 2}
+              opacity={element.style.opacity}
+              cornerRadius={4}
+            />
+            <Rect
+              x={element.width * 0.12}
+              y={element.height * 0.25}
+              width={element.width * 0.76}
+              height={element.height * 0.5}
+              fill="#232F3E"
+              cornerRadius={2}
+            />
+            <Rect x={element.width * 0.15} y={element.height * 0.29} width={element.width * 0.7} height={element.height * 0.08} fill="#527FFF"/>
+            <Rect x={element.width * 0.15} y={element.height * 0.41} width={element.width * 0.7} height={element.height * 0.08} fill="#7BB3F0"/>
+            <Rect x={element.width * 0.15} y={element.height * 0.53} width={element.width * 0.7} height={element.height * 0.08} fill="#527FFF"/>
+            <Rect x={element.width * 0.15} y={element.height * 0.65} width={element.width * 0.7} height={element.height * 0.08} fill="#7BB3F0"/>
+            <Circle x={element.width * 0.25} y={element.height * 0.33} radius={element.width * 0.03} fill="#FFD700"/>
+            <Circle x={element.width * 0.25} y={element.height * 0.45} radius={element.width * 0.03} fill="#FFD700"/>
+            <Circle x={element.width * 0.25} y={element.height * 0.57} radius={element.width * 0.03} fill="#FFD700"/>
+            <Circle x={element.width * 0.25} y={element.height * 0.69} radius={element.width * 0.03} fill="#FFD700"/>
           </Group>
         );
 

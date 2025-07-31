@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="rds-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#527FFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3C5998;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="48" height="48" fill="url(#rds-gradient)" rx="4"/>
+  
+  <!-- Database cylinder -->
+  <ellipse cx="24" cy="12" rx="18" ry="6" fill="#7BB3F0"/>
+  <rect x="6" y="12" width="36" height="24" fill="#3C5998"/>
+  <ellipse cx="24" cy="36" rx="18" ry="6" fill="#527FFF"/>
+  
+  <!-- Database layers -->
+  <ellipse cx="24" cy="20" rx="18" ry="4" fill="#7BB3F0"/>
+  <ellipse cx="24" cy="28" rx="18" ry="4" fill="#7BB3F0"/>
+  
+  <!-- RDS label indicator -->
+  <rect x="20" y="22" width="8" height="4" fill="white" opacity="0.9" rx="1"/>
+</svg>

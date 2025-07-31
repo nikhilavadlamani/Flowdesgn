@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DiagramEditor } from './components/DiagramEditor';
 import { Login } from './components/Login';
 import { Landing } from './components/Landing';
+import { NavigationPage } from './components/NavigationPage';
 import { useEditorStore } from './store/editorStore';
 import { useAuthStore } from './store/authStore';
 import { exportToPNG, exportToSVG, exportToJSON } from './utils/export';
@@ -12,6 +13,7 @@ function App() {
   const { isLoading, elements, clearAllElements, setZoom, toggleGrid, selectedElements, deleteElement } = useEditorStore();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [showLanding, setShowLanding] = useState(true);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
   // Show landing page first
   if (showLanding) {
@@ -32,10 +34,22 @@ function App() {
     );
   }
 
+  // Show navigation page if no section is selected (3rd page)
+  if (!selectedSection) {
+    return (
+      <NavigationPage onSectionSelect={setSelectedSection} />
+    );
+  }
+
   const handleLogout = () => {
     if (confirm('Are you sure you want to logout? Any unsaved changes will be lost.')) {
       logout();
+      setSelectedSection(null); // Reset section when logging out
     }
+  };
+
+  const handleBackToNavigation = () => {
+    setSelectedSection(null);
   };
 
   const handleMenuClick = (menu: string) => {
@@ -470,7 +484,7 @@ function App() {
           <div className="text-gray-500">Loading editor...</div>
         </div>
       ) : (
-        <DiagramEditor />
+        <DiagramEditor initialSection={selectedSection} onBackToNavigation={handleBackToNavigation} />
       )}
     </div>
   );

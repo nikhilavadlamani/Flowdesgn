@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="cloudfront-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F58536;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF9900;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="48" height="48" fill="url(#cloudfront-gradient)" rx="4"/>
+  
+  <!-- CloudFront globe -->
+  <circle cx="24" cy="24" r="18" fill="none" stroke="#232F3E" stroke-width="2"/>
+  <circle cx="24" cy="24" r="12" fill="none" stroke="#232F3E" stroke-width="1.5"/>
+  <circle cx="24" cy="24" r="6" fill="none" stroke="#232F3E" stroke-width="1"/>
+  <circle cx="24" cy="24" r="2" fill="#232F3E"/>
+  
+  <!-- Global distribution points -->
+  <circle cx="12" cy="12" r="2" fill="#232F3E"/>
+  <circle cx="36" cy="12" r="2" fill="#232F3E"/>
+  <circle cx="12" cy="36" r="2" fill="#232F3E"/>
+  <circle cx="36" cy="36" r="2" fill="#232F3E"/>
+  
+  <!-- Connection lines -->
+  <line x1="24" y1="6" x2="24" y2="12" stroke="#232F3E" stroke-width="2"/>
+  <line x1="24" y1="36" x2="24" y2="42" stroke="#232F3E" stroke-width="2"/>
+  <line x1="6" y1="24" x2="12" y2="24" stroke="#232F3E" stroke-width="2"/>
+  <line x1="36" y1="24" x2="42" y2="24" stroke="#232F3E" stroke-width="2"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="api-gateway-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF4B4B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="48" height="48" fill="url(#api-gateway-gradient)" rx="4"/>
+  
+  <!-- API Gateway diamond -->
+  <path d="M6 24 L24 6 L42 24 L24 42 Z" fill="#232F3E"/>
+  <path d="M10 24 L24 10 L38 24 L24 38 Z" fill="#FF4B4B"/>
+  
+  <!-- API symbol -->
+  <rect x="16" y="16" width="16" height="16" fill="#232F3E" rx="2"/>
+  <path d="M20 20 L28 24 L20 28 Z" fill="#FF4B4B"/>
+  
+  <!-- Connection points -->
+  <circle cx="12" cy="24" r="2" fill="white"/>
+  <circle cx="36" cy="24" r="2" fill="white"/>
+</svg>
