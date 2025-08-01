@@ -31,17 +31,43 @@ export const Canvas: React.FC = () => {
     gridVisible,
     snapToGrid,
     tool,
+    connectionMode,
     selectElement,
     clearSelection,
     updateElement,
     addElement,
     deleteElement,
     setPanOffset,
+    startConnection,
+    updateTempConnection,
+    finishConnection,
+    cancelConnection,
   } = useEditorStore();
 
   useEffect(() => {
     setStageSize(canvasSize);
   }, [canvasSize]);
+
+  // Update cursor based on tool
+  useEffect(() => {
+    const container = stageRef.current?.container();
+    if (!container) return;
+
+    switch (tool) {
+      case 'connector':
+        container.style.setProperty('cursor', 'crosshair');
+        break;
+      case 'hand':
+        container.style.setProperty('cursor', 'grab');
+        break;
+      case 'text':
+        container.style.setProperty('cursor', 'text');
+        break;
+      default:
+        container.style.setProperty('cursor', 'default');
+        break;
+    }
+  }, [tool]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -56,6 +82,10 @@ export const Canvas: React.FC = () => {
         clearSelection();
         setIsDrawing(false);
         setCurrentDrawing(null);
+        // Cancel connector mode
+        if (connectionMode.isActive) {
+          cancelConnection();
+        }
         // Also exit text editing mode
         if (isEditing) {
           setIsEditing(false);
@@ -84,6 +114,9 @@ export const Canvas: React.FC = () => {
       }
       if (e.key === 't' || e.key === 'T') {
         useEditorStore.getState().setTool('text');
+      }
+      if (e.key === 'l' || e.key === 'L') {
+        useEditorStore.getState().setTool('connector');
       }
     };
 
@@ -182,6 +215,11 @@ export const Canvas: React.FC = () => {
     
     if (tool === 'select') {
       clearSelection();
+    } else if (tool === 'connector') {
+      // Cancel connection if clicking on empty canvas
+      if (connectionMode.isActive) {
+        cancelConnection();
+      }
     } else if (tool === 'rectangle' || tool === 'circle' || tool === 'triangle' || tool === 'diamond' || tool === 'text') {
       setIsDrawing(true);
       setDrawingStart(pos);
@@ -210,9 +248,16 @@ export const Canvas: React.FC = () => {
   };
 
   const handleStageMouseMove = () => {
+    const pos = getPointerPosition();
+    
+    // Handle connector mode
+    if (tool === 'connector' && connectionMode.isActive) {
+      updateTempConnection(pos.x, pos.y);
+      return;
+    }
+    
     if (!isDrawing || !currentDrawing) return;
     
-    const pos = getPointerPosition();
     const width = Math.abs(pos.x - drawingStart.x);
     const height = Math.abs(pos.y - drawingStart.y);
     const x = Math.min(pos.x, drawingStart.x);
@@ -303,6 +348,23 @@ export const Canvas: React.FC = () => {
 
   const handleElementClick = (elementId: string, e: Konva.KonvaEventObject<MouseEvent>) => {
     e.cancelBubble = true;
+    
+    // Handle connector mode
+    if (tool === 'connector') {
+      const element = elements.find(el => el.id === elementId);
+      if (!element) return;
+      
+      if (!connectionMode.isActive) {
+        // Start connection from this element
+        const centerX = element.x + element.width / 2;
+        const centerY = element.y + element.height / 2;
+        startConnection(elementId, centerX, centerY);
+      } else if (connectionMode.startElementId !== elementId) {
+        // Finish connection to this element
+        finishConnection(elementId);
+      }
+      return;
+    }
     
     const currentTime = Date.now();
     const timeDiff = currentTime - lastClickTime.current;
@@ -463,6 +525,8 @@ export const Canvas: React.FC = () => {
 
   const renderElement = (element: any) => {
     const isSelected = selectedElements.includes(element.id);
+    const isStartElement = connectionMode.startElementId === element.id;
+    
     const commonProps = {
       x: element.x,
       y: element.y,
@@ -497,14 +561,21 @@ export const Canvas: React.FC = () => {
       case 'rectangle':
       case 'process':
       case 'class':
+        const rectStroke = isSelected ? '#2196f3' : 
+                          isStartElement ? '#4caf50' : 
+                          element.style.stroke;
+        const rectStrokeWidth = isSelected ? 3 : 
+                               isStartElement ? 2 : 
+                               element.style.strokeWidth;
+        
         return (
           <Group key={element.id} {...commonProps}>
             <Rect
               width={element.width}
               height={element.height}
               fill={element.style.fill}
-              stroke={isSelected ? '#2196f3' : element.style.stroke}
-              strokeWidth={isSelected ? 3 : element.style.strokeWidth}
+              stroke={rectStroke}
+              strokeWidth={rectStrokeWidth}
               opacity={element.style.opacity}
             />
             <Text
@@ -545,6 +616,13 @@ export const Canvas: React.FC = () => {
 
       case 'circle':
       case 'usecase':
+        const circleStroke = isSelected ? '#2196f3' : 
+                            isStartElement ? '#4caf50' : 
+                            element.style.stroke;
+        const circleStrokeWidth = isSelected ? 3 : 
+                                 isStartElement ? 2 : 
+                                 element.style.strokeWidth;
+        
         return (
           <Group key={element.id} {...commonProps}>
             <Circle
@@ -552,8 +630,8 @@ export const Canvas: React.FC = () => {
               y={element.height / 2}
               radius={Math.min(element.width, element.height) / 2}
               fill={element.style.fill}
-              stroke={isSelected ? '#2196f3' : element.style.stroke}
-              strokeWidth={isSelected ? 3 : element.style.strokeWidth}
+              stroke={circleStroke}
+              strokeWidth={circleStrokeWidth}
               opacity={element.style.opacity}
             />
             <Text
@@ -1568,6 +1646,30 @@ export const Canvas: React.FC = () => {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
     >
+      {/* Connector mode status indicator */}
+      {tool === 'connector' && (
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M2,12 L8,12 Q12,12 12,8 L12,4" />
+            <circle cx="2" cy="12" r="1.5" />
+            <circle cx="12" cy="4" r="1.5" />
+          </svg>
+          <span className="text-sm font-medium">
+            {connectionMode.isActive 
+              ? '🎯 Click a blue dot on another shape to connect' 
+              : '🔗 Click a blue dot on any shape to start connecting'
+            }
+          </span>
+          <button 
+            onClick={cancelConnection}
+            className="ml-2 text-blue-200 hover:text-white transition-colors text-lg leading-none"
+            title="Cancel connector mode (ESC)"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       <Stage
         ref={stageRef}
         width={stageSize.width}
@@ -1608,6 +1710,21 @@ export const Canvas: React.FC = () => {
             />
           )}
           
+          {/* Temporary connector line */}
+          {connectionMode.isActive && connectionMode.tempLine && (
+            <Line
+              points={[
+                connectionMode.tempLine.x1,
+                connectionMode.tempLine.y1,
+                connectionMode.tempLine.x2,
+                connectionMode.tempLine.y2
+              ]}
+              stroke="#2196f3"
+              strokeWidth={2}
+              opacity={0.8}
+            />
+          )}
+          
           {/* Selection handles for selected elements */}
           {selectedElements.map(elementId => {
             const element = elements.find(el => el.id === elementId);
@@ -1622,6 +1739,45 @@ export const Canvas: React.FC = () => {
                 }}
               />
             );
+          })}
+          
+          {/* Connection anchor points - only visible in connector mode */}
+          {tool === 'connector' && elements.filter(el => el.type === 'shape').map(element => {
+            const anchors = [
+              { x: element.x + element.width / 2, y: element.y, anchor: 'top' },
+              { x: element.x + element.width, y: element.y + element.height / 2, anchor: 'right' },
+              { x: element.x + element.width / 2, y: element.y + element.height, anchor: 'bottom' },
+              { x: element.x, y: element.y + element.height / 2, anchor: 'left' },
+            ];
+            
+            return anchors.map((anchor, index) => (
+              <Circle
+                key={`anchor-${element.id}-${index}`}
+                x={anchor.x}
+                y={anchor.y}
+                radius={5}
+                fill={connectionMode.startElementId === element.id ? "#4caf50" : "#1976d2"}
+                stroke="#ffffff"
+                strokeWidth={2}
+                opacity={1}
+                onClick={(e) => {
+                  e.cancelBubble = true;
+                  handleElementClick(element.id, e);
+                }}
+                onMouseEnter={(e) => {
+                  const target = e.target as any;
+                  target.fill("#ff5722");
+                  target.radius(7);
+                  e.target.getLayer()?.batchDraw();
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.target as any;
+                  target.fill(connectionMode.startElementId === element.id ? "#4caf50" : "#1976d2");
+                  target.radius(5);
+                  e.target.getLayer()?.batchDraw();
+                }}
+              />
+            ));
           })}
         </Layer>
       </Stage>

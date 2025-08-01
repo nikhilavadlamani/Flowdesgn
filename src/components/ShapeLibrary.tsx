@@ -871,12 +871,18 @@ export const ShapeLibrary: React.FC = () => {
   };
 
   const handleShapeClick = (shapeId: string, isTemplate?: boolean) => {
-    setTool('select');
-    
     if (isTemplate) {
       createTemplate(shapeId);
       return;
     }
+    
+    // Special handling for connector tool
+    if (shapeId === 'connector') {
+      setTool('connector');
+      return;
+    }
+    
+    setTool('select');
     
     // Add shape to canvas at center
     const newElement = {
