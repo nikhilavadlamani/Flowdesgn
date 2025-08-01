@@ -21,6 +21,7 @@ export const Connector: React.FC<ConnectorProps> = ({
     const centerX = element.x + element.width / 2;
     const centerY = element.y + element.height / 2;
     
+    // Ensure connection points are exactly at the shape edge
     switch (anchor) {
       case 'top':
         return { x: centerX, y: element.y };
@@ -35,6 +36,7 @@ export const Connector: React.FC<ConnectorProps> = ({
     }
   };
 
+  // Calculate precise connection points
   const startPoint = startElement 
     ? getConnectionPoint(startElement, connector.properties.anchorStart || 'right')
     : { x: connector.x, y: connector.y };
@@ -62,9 +64,10 @@ export const Connector: React.FC<ConnectorProps> = ({
 
   const drawArrowHead = () => {
     const angle = Math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x);
-    const arrowLength = 15;
+    const arrowLength = 12;
     const arrowAngle = Math.PI / 6;
 
+    // Calculate arrow points more precisely
     const x1 = endPoint.x - arrowLength * Math.cos(angle - arrowAngle);
     const y1 = endPoint.y - arrowLength * Math.sin(angle - arrowAngle);
     const x2 = endPoint.x - arrowLength * Math.cos(angle + arrowAngle);
@@ -73,45 +76,71 @@ export const Connector: React.FC<ConnectorProps> = ({
     return [endPoint.x, endPoint.y, x1, y1, endPoint.x, endPoint.y, x2, y2];
   };
 
+  // Calculate the actual line path, slightly shortened to not overlap with shapes
+  const getAdjustedPath = () => {
+    const path = getPath();
+    if (path.length >= 4) {
+      const dx = endPoint.x - startPoint.x;
+      const dy = endPoint.y - startPoint.y;
+      const length = Math.sqrt(dx * dx + dy * dy);
+      
+      if (length > 0) {
+        // Slightly shorten the line so arrow doesn't overlap with shape
+        const shortenBy = 2;
+        const unitX = dx / length;
+        const unitY = dy / length;
+        
+        const adjustedEndX = endPoint.x - unitX * shortenBy;
+        const adjustedEndY = endPoint.y - unitY * shortenBy;
+        
+        return [startPoint.x, startPoint.y, adjustedEndX, adjustedEndY];
+      }
+    }
+    return path;
+  };
+
   return (
     <Group onClick={onClick}>
       {/* Main connector line */}
       <Line
-        points={getPath()}
-        stroke={isSelected ? '#2196f3' : (connector.style.stroke || '#000000')}
+        points={getAdjustedPath()}
+        stroke={isSelected ? '#2196f3' : (connector.style.stroke || '#333333')}
         strokeWidth={isSelected ? 3 : (connector.style.strokeWidth || 2)}
         opacity={connector.style.opacity || 1}
-        dash={connector.style.strokeDashArray}
+        lineCap="round"
+        lineJoin="round"
       />
       
       {/* Arrow head */}
       <Line
         points={drawArrowHead()}
-        stroke={isSelected ? '#2196f3' : (connector.style.stroke || '#000000')}
+        stroke={isSelected ? '#2196f3' : (connector.style.stroke || '#333333')}
         strokeWidth={isSelected ? 3 : (connector.style.strokeWidth || 2)}
         opacity={connector.style.opacity || 1}
-        fill={connector.style.stroke || '#000000'}
+        fill={isSelected ? '#2196f3' : (connector.style.stroke || '#333333')}
         closed
+        lineCap="round"
+        lineJoin="round"
       />
       
-      {/* Connection points for visual feedback */}
+      {/* Connection point indicators when selected */}
       {isSelected && (
         <>
           <Circle
             x={startPoint.x}
             y={startPoint.y}
-            radius={4}
-            fill="#2196f3"
+            radius={3}
+            fill="#4caf50"
             stroke="#ffffff"
-            strokeWidth={2}
+            strokeWidth={1}
           />
           <Circle
             x={endPoint.x}
             y={endPoint.y}
-            radius={4}
-            fill="#2196f3"
+            radius={3}
+            fill="#f44336"
             stroke="#ffffff"
-            strokeWidth={2}
+            strokeWidth={1}
           />
         </>
       )}
